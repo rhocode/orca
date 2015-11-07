@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">orca</string>
     <string name="action_settings">Settings</string>
+    <string name="StreetMapMenu">Streets</string>
+    <string name="TopoMenu">Topographic</string>
+    <string name="GrayMenu">Gray</string>
+    <string name="OceanMenu">Oceans</string>
+    <string name="featureServiceURL">http://services5.arcgis.com/EJ2RiPU7N7uEokK6/arcgis/rest/services/UCR_Buildings_Boundaries/FeatureServer/0</string>
 </resources>
