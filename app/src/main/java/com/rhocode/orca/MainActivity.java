@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.location.Location;
+import android.location.LocationListener;
 
 import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.MapOptions;
 import com.esri.android.map.MapView;
 import com.esri.android.map.ags.ArcGISFeatureLayer;
 import com.esri.android.map.event.OnStatusChangedListener;
+import com.esri.android.map.LocationDisplayManager;
 import com.esri.core.geometry.Polygon;
 
 public class MainActivity extends ActionBarActivity {
@@ -18,10 +21,10 @@ public class MainActivity extends ActionBarActivity {
     private MapView mMapView = null;
 
     // The basemap switching menu items.
-    private MenuItem mStreetsMenuItem = null;
-    private MenuItem mTopoMenuItem = null;
-    private MenuItem mGrayMenuItem = null;
-    private MenuItem mOceansMenuItem = null;
+//    private MenuItem mStreetsMenuItem = null;
+//    private MenuItem mTopoMenuItem = null;
+//    private MenuItem mGrayMenuItem = null;
+//    private MenuItem mOceansMenuItem = null;
 
     ArcGISFeatureLayer mFeatureLayer;
     GraphicsLayer mGraphicsLayer;
@@ -50,9 +53,8 @@ public class MainActivity extends ActionBarActivity {
         // Add Feature layer to the MapView
         mFeatureLayer = new ArcGISFeatureLayer(mFeatureServiceURL, ArcGISFeatureLayer.MODE.ONDEMAND);
         mMapView.addLayer(mFeatureLayer);
-
-        // Set the Esri logo to be visible, and enable map to wrap around date line.
-        mMapView.setEsriLogoVisible(true);
+        mMapView.setAllowRotationByPinch(true);
+        mMapView.setEsriLogoVisible(false);
         mMapView.enableWrapAround(true);
 
         // Set a listener for map status changes; this will be called when switching basemaps.
@@ -67,6 +69,12 @@ public class MainActivity extends ActionBarActivity {
                 if (STATUS.LAYER_LOADED == status) {
                     mMapView.setExtent(mCurrentMapExtent);
                 }
+
+                if (source == mMapView && status == STATUS.INITIALIZED) {
+                    LocationDisplayManager ls = mMapView.getLocationDisplayManager();
+                    ls.setAutoPanMode(LocationDisplayManager.AutoPanMode.LOCATION);
+                    ls.start();
+                }
             }
         });
     }
@@ -74,16 +82,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        // Get the basemap switching menu items.
-        mStreetsMenuItem = menu.getItem(0);
-        mTopoMenuItem = menu.getItem(1);
-        mGrayMenuItem = menu.getItem(2);
-        mOceansMenuItem = menu.getItem(3);
-
-        // Also set the topo basemap menu item to be checked, as this is the default.
-        mTopoMenuItem.setChecked(true);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//        // Get the basemap switching menu items.
+//        mStreetsMenuItem = menu.getItem(0);
+//        mTopoMenuItem = menu.getItem(1);
+//        mGrayMenuItem = menu.getItem(2);
+//        mOceansMenuItem = menu.getItem(3);
+//
+//        // Also set the topo basemap menu item to be checked, as this is the default.
+//        mGrayMenuItem.setChecked(true);
 
         return true;
     }
@@ -93,34 +101,35 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+//        int id = item.getItemId();
+//
+//
+//        // Save the current extent of the map before changing the map.
+//        mCurrentMapExtent = mMapView.getExtent();
 
-
-        // Save the current extent of the map before changing the map.
-        mCurrentMapExtent = mMapView.getExtent();
-
-        // Handle menu item selection.
-        switch (item.getItemId()) {
-            case R.id.World_Street_Map:
-                mMapView.setMapOptions(mStreetsBasemap);
-                mStreetsMenuItem.setChecked(true);
-                return true;
-            case R.id.World_Topo:
-                mMapView.setMapOptions(mTopoBasemap);
-                mTopoMenuItem.setChecked(true);
-                return true;
-            case R.id.Gray:
-                mMapView.setMapOptions(mGrayBasemap);
-                mGrayMenuItem.setChecked(true);
-                return true;
-            case R.id.Ocean_Basemap:
-                mMapView.setMapOptions(mOceansBasemap);
-                mOceansMenuItem.setChecked(true);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+//        // Handle menu item selection.
+//        switch (item.getItemId()) {
+//            case R.id.World_Street_Map:
+//                mMapView.setMapOptions(mStreetsBasemap);
+//                mStreetsMenuItem.setChecked(true);
+//                return true;
+//            case R.id.World_Topo:
+//                mMapView.setMapOptions(mTopoBasemap);
+//                mTopoMenuItem.setChecked(true);
+//                return true;
+//            case R.id.Gray:
+//                mMapView.setMapOptions(mGrayBasemap);
+//                mGrayMenuItem.setChecked(true);
+//                return true;
+//            case R.id.Ocean_Basemap:
+//                mMapView.setMapOptions(mOceansBasemap);
+//                mOceansMenuItem.setChecked(true);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+        return true;
     }
+
 
 
     protected void onPause() {

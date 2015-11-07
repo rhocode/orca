@@ -2,18 +2,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.rhocode.orca.MainActivity" >
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/World_Street_Map"
-            android:title="@string/StreetMapMenu" />
-        <item
-            android:id="@+id/World_Topo"
-            android:title="@string/TopoMenu" />
-        <item
-            android:id="@+id/Gray"
-            android:title="@string/GrayMenu" />
-        <item
-            android:id="@+id/Ocean_Basemap"
-            android:title="@string/OceanMenu" />
-    </group>
+
 </menu>

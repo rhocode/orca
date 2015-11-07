@@ -34,4 +34,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.esri.arcgis.android:arcgis-android:10.2.7'
+    // Geotrigger SDK for Android
+    compile 'com.esri.android.geotrigger:geotrigger-sdk:1.2.0'
+    // The Geotrigger SDK requires Google Play Services 6.5.87 (or higher)
+    compile 'com.google.android.gms:play-services:6.5.87'
 }
